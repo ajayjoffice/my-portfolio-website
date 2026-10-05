@@ -304,7 +304,8 @@ section[id]{scroll-margin-top:0}
 /* A floating retro laptop with a typewriter terminal, centered beside hero copy. */
 .hero{display:block;min-height:calc(100svh - 105px);align-content:start}
 .hero-stage{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);align-items:center;gap:clamp(24px,4vw,58px)}
-.hero-copy{min-width:0}
+.hero-copy{min-width:0;order:1}
+.hero-motion{order:2}
 .hero-meta{flex-wrap:wrap;row-gap:12px}
 .hero-motion{position:relative;top:auto;right:auto;width:min(100%,440px);aspect-ratio:1.12;margin:0;transform:none;justify-self:center;perspective:1200px;pointer-events:none}
 .retro-laptop{position:absolute;inset:6% 2% 5%;transform-style:preserve-3d;transform:rotateX(7deg) rotateY(-9deg);animation:laptop-float 7s ease-in-out infinite;filter:drop-shadow(0 24px 24px #25291d25)}
@@ -333,5 +334,43 @@ section[id]{scroll-margin-top:0}
 .hero-actions{margin-top:30px}
 .hero-quote{margin:24px 0 0;padding-left:13px;border-left:1px solid #8da36d;color:#778264;font:italic 17px/1.4 Georgia,serif;letter-spacing:.01em}
 @media(min-width:821px) and (max-width:1100px){.hero h1{font-size:clamp(3rem,6.5vw,4.6rem)}}
-@media(max-width:820px){.hero{min-height:0}.hero-stage{grid-template-columns:minmax(0,1fr)}.hero-motion{display:none}}
+/* Use a balanced two-column hero on tablets, then stack tightly on phones. */
+@media(max-width:820px){
+  .hero{min-height:0}
+  .hero-stage{grid-template-columns:minmax(0,1.1fr) minmax(210px,.75fr);align-items:center;gap:22px}
+  .hero-copy{display:block;order:1}
+  .hero-motion{display:block;width:min(100%,280px);margin:0 auto;justify-self:center;order:2}
+  .console-body{padding:14px 11px}
+  .console-titlebar{height:20px}
+}
+@media(max-width:620px){
+  .hero-stage{grid-template-columns:minmax(0,1fr);gap:0}
+  .hero-copy{display:contents}
+  .hero-copy>.eyebrow{order:1;margin:0 0 14px}
+  .hero-motion{width:min(72vw,260px);aspect-ratio:1.2;margin:0 auto 8px;order:2}
+  .hero-copy>h1{order:3}
+  .hero-copy>.hero-quote{order:4}
+  .hero-copy>.hero-actions{order:5}
+  .hero-copy>.hero-meta{order:6}
+}
+@media(max-width:420px){
+  .hero-motion{width:min(72vw,238px)}
+  .console-body{font-size:8px}
+}
+
+/* Focus internship entries on outcomes, with LinkedIn as the full-detail route. */
+.experience-points{margin:0 0 15px;padding:0;list-style:none;display:grid;gap:8px;max-width:680px}
+.experience-points li{position:relative;padding-left:17px;font-size:15px;line-height:1.75;color:#646960}
+.experience-points li::before{content:"";position:absolute;left:0;top:.73em;width:6px;height:6px;border-radius:50%;background:#86a650}
+.experience-link{display:table;width:max-content;margin:15px 0 0;padding:8px 0 4px;border-top:1px solid var(--line)}
+.eyebrow-text{min-width:0;flex:1;line-height:1.5}
+.cs-minor{white-space:nowrap}
+@media(max-width:620px){
+  .experience-points li{font-size:14px;line-height:1.7}
+  .experience-link{margin:14px 0 0}
+}
+@media(max-width:420px){.experience-link{margin-left:0}}
+.view-more-certificates{margin-top:8px}
+.certificate[hidden]{display:none}
+.button[hidden]{display:none!important}
 @media(prefers-reduced-motion:reduce){.retro-laptop,.console-typed,.console-response,.console-next,.console-next i{animation:none!important}.console-typed{max-width:19ch;border-right:0}.console-response,.console-next{opacity:1}}

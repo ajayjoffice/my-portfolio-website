@@ -50,3 +50,72 @@ viewMoreButton.addEventListener('click', () => {
 
 window.addEventListener('resize', updateProjects);
 updateProjects();
+
+const certificateList = document.querySelector('#certificate-list');
+const moreCertificatesButton = document.querySelector('.view-more-certificates');
+let certificates = [];
+let showAllCertificates = false;
+
+function getVisibleCertificateCount() {
+  if (window.innerWidth <= 640) return 3;
+  if (window.innerWidth <= 900) return 4;
+  return certificates.length;
+}
+
+function updateCertificates() {
+  if (!certificateList || !moreCertificatesButton) return;
+
+  const visibleCount = getVisibleCertificateCount();
+  Array.from(certificateList.children).forEach((item, index) => {
+    item.hidden = !showAllCertificates && index >= visibleCount;
+  });
+
+  const canExpand = visibleCount < certificates.length;
+  moreCertificatesButton.hidden = !canExpand;
+  moreCertificatesButton.setAttribute('aria-expanded', String(showAllCertificates));
+  moreCertificatesButton.innerHTML = showAllCertificates
+    ? 'Show fewer certificates <span>−</span>'
+    : 'View more certificates <span>＋</span>';
+}
+
+async function renderCertificates() {
+  if (!certificateList) return;
+
+  try {
+    const response = await fetch('certificates.json');
+    if (!response.ok) throw new Error('Could not load certificates');
+    certificates = await response.json();
+
+    certificates.forEach(({ title, url, label = 'Certificate information' }) => {
+      const item = document.createElement('article');
+      item.className = 'certificate';
+
+      const heading = document.createElement('h4');
+      heading.textContent = title;
+
+      const link = document.createElement('a');
+      link.className = 'certificate-button';
+      link.href = url;
+      link.target = '_blank';
+      link.rel = 'noreferrer';
+      link.append(document.createTextNode(`${label} `));
+
+      const arrow = document.createElement('span');
+      arrow.textContent = '↗';
+      link.append(arrow);
+
+      item.append(heading, link);
+      certificateList.append(item);
+    });
+    updateCertificates();
+  } catch (error) {
+    certificateList.textContent = 'Certificate details are temporarily unavailable.';
+  }
+}
+
+renderCertificates();
+moreCertificatesButton?.addEventListener('click', () => {
+  showAllCertificates = !showAllCertificates;
+  updateCertificates();
+});
+window.addEventListener('resize', updateCertificates);
