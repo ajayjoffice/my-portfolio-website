@@ -373,14 +373,9 @@ section[id]{scroll-margin-top:0}
 .view-more-certificates{margin-top:8px}
 .certificate[hidden]{display:none}
 .button[hidden]{display:none!important}
-/* Align long-form site copy consistently across sections. */
-.about-copy p,
-.project-info>p,
-.skills-list p,
-.experience-points li,
-.education-items article p,
-.contact-copy>p,
-.resume-inner p{
+/* Keep all descriptive content consistently justified across the site. */
+main p,
+.experience-points li{
   text-align:justify;
   text-justify:inter-word;
 }
