@@ -373,4 +373,15 @@ section[id]{scroll-margin-top:0}
 .view-more-certificates{margin-top:8px}
 .certificate[hidden]{display:none}
 .button[hidden]{display:none!important}
+/* Align long-form site copy consistently across sections. */
+.about-copy p,
+.project-info>p,
+.skills-list p,
+.experience-points li,
+.education-items article p,
+.contact-copy>p,
+.resume-inner p{
+  text-align:justify;
+  text-justify:inter-word;
+}
 @media(prefers-reduced-motion:reduce){.retro-laptop,.console-typed,.console-response,.console-next,.console-next i{animation:none!important}.console-typed{max-width:19ch;border-right:0}.console-response,.console-next{opacity:1}}
